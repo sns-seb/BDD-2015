@@ -9,7 +9,7 @@ import io.gatling.jdbc.Predef._
 class AdminChecksOutCeQueue extends Simulation {
 
 	val httpProtocol = http
-		.baseURL(System.getProperty("targetHost")
+		.baseURL(System.getProperty("targetHost"))
 		.inferHtmlResources()
 
 	val headers_0 = Map(
