@@ -43,7 +43,7 @@ class AdminChecksOutCeQueue extends Simulation {
 	val headers_15 = Map(
 		"Accept" -> "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
 		"Accept-Encoding" -> "gzip, deflate",
-		"Origin" -> "System.getProperty("targetHost")",
+		"Origin" -> System.getProperty("targetHost"),
 		"Upgrade-Insecure-Requests" -> "1")
 
 	val headers_18 = Map("accept" -> "application/json,*/*")
@@ -52,7 +52,7 @@ class AdminChecksOutCeQueue extends Simulation {
 		"Accept" -> "application/json, text/javascript, */*; q=0.01",
 		"X-Requested-With" -> "XMLHttpRequest")
 
-    val uri1 = "System.getProperty("targetHost")"
+    val uri1 = System.getProperty("targetHost")
 
 	val scn = scenario("AdminChecksOutCeQueue")
 		.exec(
