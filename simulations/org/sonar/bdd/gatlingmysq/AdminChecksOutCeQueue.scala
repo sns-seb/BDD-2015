@@ -9,8 +9,6 @@ import io.gatling.jdbc.Predef._
 class AdminChecksOutCeQueue extends Simulation {
 
     val uri1 = System.getProperty("targetHost")
-    var username = System.getProperty("sonar.username")
-    val password = System.getProperty("sonar.password")
 
 	val headers_0 = Map(
 		"Accept" -> "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
@@ -58,7 +56,10 @@ class AdminChecksOutCeQueue extends Simulation {
 
 	object Authenticate {
 
-		val authenticate =
+		// expect Session to contain values for following variables:
+		// - username
+		// - password
+		var authenticate =
 			exec(
 				http("SQ Home").get("/").headers(headers_0)
 				.resources(
@@ -87,8 +88,8 @@ class AdminChecksOutCeQueue extends Simulation {
 			.exec(
 				http("Login as admin").post("/sessions/login").headers(headers_15)
 				.formParam("return_to_anchor", "")
-				.formParam("login", username)
-				.formParam("password", password)
+				.formParam("login", "${username}")
+				.formParam("password", "${password}")
 				.formParam("remember_me", "1")
 				.formParam("commit", "")
 				.resources(
@@ -268,14 +269,21 @@ class AdminChecksOutCeQueue extends Simulation {
 	}
 
 	object AdminUser {
+		/* == sample devs.csv ==
+		username,password
+		god,callMyNameBitch
+		*/
+		val adminLoginsFeeder = csv("admins.csv").random
 
 		val oneshot = scenario("Admin checks CE Queue once")
+			.feed(adminLoginsFeeder)
 			.exec(
 				Authenticate.authenticate,
 				BackgroundTaskPage.goTo,
 				BackgroundTaskPage.reload
 			)
 		val frenetic = scenario("Frenetic admin checks CE Queue")
+			.feed(adminLoginsFeeder)
 			.exec(
 				Authenticate.authenticate,
 				BackgroundTaskPage.goTo,
@@ -287,8 +295,14 @@ class AdminChecksOutCeQueue extends Simulation {
 	}
 
 	object DevUser {
+		/* == sample devs.csv ==
+		username,password
+		foo,bar
+		*/
+		var devLoginsFeeder = csv("devs.csv").random
 
-		val crawlProjectIssuesInSource = scenario("UserChecksOutIssues")
+		val crawlProjectIssuesInSource = scenario("Dev checks its projects issues")
+			.feed(devLoginsFeeder)
 			.exec(
 				Authenticate.authenticate,
 				IssuePage.goToIssuePage,
@@ -308,6 +322,5 @@ class AdminChecksOutCeQueue extends Simulation {
 		DevUser.crawlProjectIssuesInSource.inject(
 			atOnceUsers(1)
 		)
-
 	).protocols(httpProtocol)
 }
