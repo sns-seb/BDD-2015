@@ -314,13 +314,14 @@ class AdminChecksOutCeQueue extends Simulation {
 
 	setUp(
 		AdminUser.oneshot.inject(
-			atOnceUsers(1)
+			// atOnceUsers(1)
+			splitUsers(50) into(rampUsers(5) over(30 seconds)) separatedBy(10 seconds)
 		),
 		AdminUser.frenetic.inject(
-			atOnceUsers(1)
+			splitUsers(10) into(atOnceUsers(1)) separatedBy(10 seconds)
 		),
 		DevUser.crawlProjectIssuesInSource.inject(
-			atOnceUsers(1)
+			splitUsers(50) into(rampUsers(10) over(60 seconds)) separatedBy(10 seconds)
 		)
 	).protocols(httpProtocol)
 }
