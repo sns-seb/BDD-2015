@@ -43,7 +43,7 @@ class AdminChecksOutCeQueue extends Simulation {
 	val headers_15 = Map(
 		"Accept" -> "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
 		"Accept-Encoding" -> "gzip, deflate",
-		"Origin" -> "https://sonardesktop:10443",
+		"Origin" -> "System.getProperty("targetHost")",
 		"Upgrade-Insecure-Requests" -> "1")
 
 	val headers_18 = Map("accept" -> "application/json,*/*")
@@ -52,7 +52,7 @@ class AdminChecksOutCeQueue extends Simulation {
 		"Accept" -> "application/json, text/javascript, */*; q=0.01",
 		"X-Requested-With" -> "XMLHttpRequest")
 
-    val uri1 = "https://sonardesktop:10443"
+    val uri1 = "System.getProperty("targetHost")"
 
 	val scn = scenario("AdminChecksOutCeQueue")
 		.exec(
@@ -129,5 +129,9 @@ class AdminChecksOutCeQueue extends Simulation {
 				http("/api/ce/activity").get(uri1 + "/api/ce/activity?p=1&ps=200").headers(headers_11))
 			)
 
-	setUp(scn.inject(atOnceUsers(1))).protocols(httpProtocol)
+	setUp(
+		scn.inject(
+			atOnceUsers(1)
+		)
+	).protocols(httpProtocol)
 }
