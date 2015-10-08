@@ -287,9 +287,10 @@ class AdminChecksOutCeQueue extends Simulation {
 			.exec(
 				Authenticate.authenticate,
 				BackgroundTaskPage.goTo,
-				repeat(10) {
+				// spends 4 minutes refreshing every 2 seconds
+				repeat(120) {
 					BackgroundTaskPage.reload
-					.pause(5)
+					.pause(2)
 				}
 			)
 	}
@@ -318,7 +319,7 @@ class AdminChecksOutCeQueue extends Simulation {
 			splitUsers(50) into(rampUsers(5) over(30 seconds)) separatedBy(10 seconds)
 		),
 		AdminUser.frenetic.inject(
-			splitUsers(10) into(atOnceUsers(1)) separatedBy(10 seconds)
+			splitUsers(10) into(atOnceUsers(1)) separatedBy(120 seconds)
 		),
 		DevUser.crawlProjectIssuesInSource.inject(
 			splitUsers(50) into(rampUsers(10) over(60 seconds)) separatedBy(10 seconds)
