@@ -103,7 +103,7 @@ class AdminChecksOutCeQueue extends Simulation {
 				http("loading icon").get(uri1 + "/images/loading.gif").headers(headers_10),
 				http("nav/app.js").get(uri1 + "/js/apps/nav/app.js?v=5.2-M57_2015-10-06"),
 				http("l10n").get(uri1 + "/api/l10n/index?locale=fr&ts=2015-10-07T15%3A06%3A31%2B0000").headers(headers_24).check(status.is(304)),
-				http("request_30").get(uri1 + "/api/navigation/settings").headers(headers_11),
+				http("/api/navigation/settings").get(uri1 + "/api/navigation/settings").headers(headers_11),
 				http("/api/navigation/global").get(uri1 + "/api/navigation/global").headers(headers_11))
 			)
 		.pause(4)
@@ -111,21 +111,21 @@ class AdminChecksOutCeQueue extends Simulation {
 			http("Go to Background tasks page").get("/background_tasks").headers(headers_12)
 			.resources(
 				http("sonar.js").get(uri1 + "/js/sonar.js?v=5.2-M57_2015-10-06"),
-				http("request_34").get(uri1 + "/js/apps/background-tasks/app.js?v=5.2-M57_2015-10-06"),
+				http("background-tasks/app.js").get(uri1 + "/js/apps/background-tasks/app.js?v=5.2-M57_2015-10-06"),
 				http("l10n").get(uri1 + "/api/l10n/index?locale=fr&ts=2015-10-07T15%3A06%3A31%2B0000").headers(headers_24).check(status.is(304)),
 				http("/api/ce/queue").get(uri1 + "/api/ce/queue").headers(headers_11),
-				http("request_37").get(uri1 + "/api/ce/activity?p=1&ps=200").headers(headers_11),
-				http("request_38").get(uri1 + "/api/ce/activity?ps=1&onlyCurrents=true&status=FAILED").headers(headers_11),
+				http("/api/ce/activity").get(uri1 + "/api/ce/activity?p=1&ps=200").headers(headers_11),
+				http("/api/ce/activity?FAILED").get(uri1 + "/api/ce/activity?ps=1&onlyCurrents=true&status=FAILED").headers(headers_11),
 				http("nav/app.js").get(uri1 + "/js/apps/nav/app.js?v=5.2-M57_2015-10-06"),
 				http("l10n").get(uri1 + "/api/l10n/index?locale=fr&ts=2015-10-07T15%3A06%3A31%2B0000").headers(headers_24).check(status.is(304)),
-				http("request_41").get(uri1 + "/api/navigation/settings").headers(headers_11),
+				http("/api/navigation/settings").get(uri1 + "/api/navigation/settings").headers(headers_11),
 				http("/api/navigation/global").get(uri1 + "/api/navigation/global").headers(headers_11))
 			)
 		.pause(5)
 		.exec(
 			http("Reload background tasks page").get("/api/ce/queue").headers(headers_11)
 			.resources(
-				http("/api/ce/activity").get(uri1 + "/api/ce/activity?ps=1&onlyCurrents=true&status=FAILED").headers(headers_11),
+				http("/api/ce/activity?FAILED").get(uri1 + "/api/ce/activity?ps=1&onlyCurrents=true&status=FAILED").headers(headers_11),
 				http("/api/ce/activity").get(uri1 + "/api/ce/activity?p=1&ps=200").headers(headers_11))
 			)
 
