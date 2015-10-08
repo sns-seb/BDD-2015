@@ -6,7 +6,7 @@ import io.gatling.core.Predef._
 import io.gatling.http.Predef._
 import io.gatling.jdbc.Predef._
 
-class SimpleAdminSimulation2 extends Simulation {
+class AdminChecksOutCeQueue extends Simulation {
 
 	val httpProtocol = http
 		.baseURL("https://sonardesktop:10443")
@@ -54,7 +54,7 @@ class SimpleAdminSimulation2 extends Simulation {
 
     val uri1 = "https://sonardesktop:10443"
 
-	val scn = scenario("SimpleAdminSimulation2")
+	val scn = scenario("AdminChecksOutCeQueue")
 		.exec(
 			http("SQ Home").get("/").headers(headers_0)
 			.resources(
