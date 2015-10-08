@@ -9,7 +9,7 @@ import io.gatling.jdbc.Predef._
 class AdminChecksOutCeQueue extends Simulation {
 
 	val httpProtocol = http
-		.baseURL("https://sonardesktop:10443")
+		.baseURL(System.getProperty("targetHost")
 		.inferHtmlResources()
 
 	val headers_0 = Map(
@@ -80,8 +80,8 @@ class AdminChecksOutCeQueue extends Simulation {
 		.exec(
 			http("Login as admin").post("/sessions/login").headers(headers_15)
 			.formParam("return_to_anchor", "")
-			.formParam("login", "admin")
-			.formParam("password", "admin")
+			.formParam("login", System.getProperty("sonar.username"))
+			.formParam("password", System.getProperty("sonar.password"))
 			.formParam("remember_me", "1")
 			.formParam("commit", "")
 			.resources(
