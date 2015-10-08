@@ -44,7 +44,7 @@ class UserChecksOutIssues extends Simulation {
 		"Accept" -> "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
 		"Upgrade-Insecure-Requests" -> "1")
 
-	val headers_14 = Map(
+	val headers_15 = Map(
 		"Accept" -> "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
 		"Accept-Encoding" -> "gzip, deflate",
 		"Origin" -> uri1,
@@ -79,7 +79,7 @@ class UserChecksOutIssues extends Simulation {
 		)
 		.pause(8)
 		.exec(
-			http("Login").post("/sessions/login").headers(headers_14)
+			http("Login").post("/sessions/login").headers(headers_15)
 			.formParam("return_to_anchor", "")
 			.formParam("login", username)
 			.formParam("password", password)
